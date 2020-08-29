@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"math"
 	"os"
+	"strings"
 )
 
 
@@ -15,6 +16,26 @@ var (
 type CostMap struct {
 	mp map[string]float64
 	maxLengthKey int
+}
+
+func (cm *CostMap) Get (key string,default_ float64) float64{
+	val, ok := cm.mp[key]
+	if !ok {
+		return default_
+	}
+	return val
+}
+
+func init(){
+	wordFilePath = "words.txt"
+	languageWords,err := readWordFile(wordFilePath)
+
+	if err != nil{
+
+	}
+	wordCost = NewCostMap(languageWords,func (weight int, words [] string) float64 {
+		return math.Log(float64(weight)) * math.Log(float64(len(words)))
+	})
 }
 
 func NewCostMap(words [] string, Cost func(int, [] string) float64) *CostMap{
@@ -34,22 +55,6 @@ func NewCostMap(words [] string, Cost func(int, [] string) float64) *CostMap{
 	return cm
 }
 
-
-func init(){
-	wordFilePath = "words.txt"
-	languageWords,err := readWordFile(wordFilePath)
-
-	if err != nil{
-
-	}
-	wordCost = NewCostMap(languageWords,func (weight int, words [] string) float64 {
-		return math.Log(float64(weight)) * math.Log(float64(len(words)))
-	})
-}
-
-
-
-
 func readWordFile(filepath string) (words [] string,err error){
 	f,err := os.Open(filepath)
 
@@ -68,4 +73,70 @@ func readWordFile(filepath string) (words [] string,err error){
 	}
 
 	return words,nil
+}
+
+func Min(nums ...float64) float64{
+	minimum := nums[0]
+	for i := 1; i < len(nums); i++{
+		minimum = math.Min(nums[i],minimum)
+	}
+	return minimum
+}
+
+func Reverse(s [] float64) [] float64 {
+	reversedSlice := make([]float64,0,len(s))
+	j := len(s)-1
+
+	for j >= 0{
+		reversedSlice = append(reversedSlice,s[j])
+		j-=1
+	}
+	return reversedSlice
+}
+
+func ReverseStringSlice(s [] string) [] string {
+	reversedSlice := make([]string,0,len(s))
+	j := len(s)-1
+
+	for j >= 0{
+		reversedSlice = append(reversedSlice,s[j])
+		j-=1
+	}
+	return reversedSlice
+}
+
+func FindBestMatch(s string,costIdx int, cost [] float64) (float64,int){
+	startIdx := int(math.Max(0,float64(costIdx-wordCost.maxLengthKey)))
+
+	candidatesForBestMatch := cost[startIdx:costIdx]
+	candidatesForBestMatch = Reverse(candidatesForBestMatch)
+	optimalCost := math.Inf(1)
+	optimalCostIdx := -1
+	for k,c := range candidatesForBestMatch{
+		key := s[costIdx-k-1:costIdx]
+		newCost := c + wordCost.Get(key,9.0e99)
+		if newCost < optimalCost{
+			optimalCost = newCost
+			optimalCostIdx = k+1
+		}
+	}
+
+	return optimalCost,optimalCostIdx
+}
+
+func Split(s string) string{
+	cost := []float64 {0.0}
+	for i := 1; i < len(s)+1; i++{
+		c,_ := FindBestMatch(s,i,cost)
+		cost = append(cost,c)
+	}
+	output := []string{}
+	for i := len(s); i > 0;{
+		_,k := FindBestMatch(s,i,cost)
+		output = append(output,s[i-k:i])
+		i-=k
+	}
+	return strings.Join(ReverseStringSlice(output)," ")
+
+
 }
