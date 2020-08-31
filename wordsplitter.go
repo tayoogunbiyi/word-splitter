@@ -5,6 +5,7 @@ import (
 	"math"
 	"os"
 	"strings"
+	"fmt"
 )
 
 
@@ -30,8 +31,9 @@ func init(){
 	wordFilePath = "words.txt"
 	languageWords,err := readWordFile(wordFilePath)
 
-	if err != nil{
-
+	if err != nil {
+		fmt.Println("Could not load word frequency list - " + err.Error())
+		os.Exit(1)
 	}
 	wordCost = NewCostMap(languageWords,func (weight int, words [] string) float64 {
 		return math.Log(float64(weight)) * math.Log(float64(len(words)))
