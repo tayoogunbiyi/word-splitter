@@ -1,4 +1,4 @@
-package wordninja
+package wordsplitter
 
 import (
 	"bufio"
