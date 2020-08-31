@@ -10,7 +10,7 @@ I decided to re-write it in Go.
 ## Installation
 
 ```
-go get https://github.com/tayoogunbiyi/word-splitter
+go get github.com/tayoogunbiyi/word-splitter
 ```
 
 ## Usage
@@ -20,7 +20,7 @@ package main
 
 import (
     "fmt"
-    "https://github.com/tayoogunbiyi/word-splitter"
+    "github.com/tayoogunbiyi/word-splitter"
 )
 
 func main(){
