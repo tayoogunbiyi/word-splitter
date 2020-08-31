@@ -14,9 +14,9 @@ func TestReadWordFile(t *testing.T) {
 	}
 }
 
-func TestReverse(t *testing.T) {
+func TestReverseFloatSlice(t *testing.T) {
 	s1 := []float64{1, 2, 3, 4, 5}
-	reversedS1 := Reverse(s1)
+	reversedS1 := ReverseFloatSlice(s1)
 	for i, j := 0, len(s1)-1; i < len(s1); i, j = i+1, j-1 {
 		if s1[i] != reversedS1[j] {
 			t.Errorf("Expected %f but got %f at index %d of the reversed slice", s1[i], reversedS1[j], j)

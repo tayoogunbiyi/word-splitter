@@ -75,15 +75,7 @@ func readWordFile(filepath string) (words [] string,err error){
 	return words,nil
 }
 
-func Min(nums ...float64) float64{
-	minimum := nums[0]
-	for i := 1; i < len(nums); i++{
-		minimum = math.Min(nums[i],minimum)
-	}
-	return minimum
-}
-
-func Reverse(s [] float64) [] float64 {
+func ReverseFloatSlice(s [] float64) [] float64 {
 	reversedSlice := make([]float64,0,len(s))
 	j := len(s)-1
 
@@ -109,7 +101,7 @@ func FindBestMatch(s string,costIdx int, cost [] float64) (float64,int){
 	startIdx := int(math.Max(0,float64(costIdx-wordCost.maxLengthKey)))
 
 	candidatesForBestMatch := cost[startIdx:costIdx]
-	candidatesForBestMatch = Reverse(candidatesForBestMatch)
+	candidatesForBestMatch = ReverseFloatSlice(candidatesForBestMatch)
 	optimalCost := math.Inf(1)
 	optimalCostIdx := -1
 	for k,c := range candidatesForBestMatch{
@@ -134,7 +126,7 @@ func Split(s string) string{
 		c,_ := FindBestMatch(s,i,cost)
 		cost = append(cost,c)
 	}
-	output := []string{}
+	var output []string
 	for i := len(s); i > 0;{
 		_,k := FindBestMatch(s,i,cost)
 		currSubstring := s[i-k:i]
