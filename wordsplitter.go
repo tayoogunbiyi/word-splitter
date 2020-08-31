@@ -4,6 +4,8 @@ import (
 	"bufio"
 	"math"
 	"os"
+	"path"
+	"runtime"
 	"strings"
 	"fmt"
 )
@@ -27,15 +29,16 @@ func (cm *CostMap) Get (key string,default_ float64) float64{
 	return val
 }
 
-func init(){
+func init() {
+	_, fp, _, _ := runtime.Caller(0)
 	wordFilePath = "words.txt"
-	languageWords,err := readWordFile(wordFilePath)
+	languageWords, err := readWordFile(path.Join(path.Dir(fp), wordFilePath))
 
 	if err != nil {
 		fmt.Println("Could not load word frequency list - " + err.Error())
 		os.Exit(1)
 	}
-	wordCost = NewCostMap(languageWords,func (weight int, words [] string) float64 {
+	wordCost = NewCostMap(languageWords, func(weight int, words []string) float64 {
 		return math.Log(float64(weight)) * math.Log(float64(len(words)))
 	})
 }
