@@ -31,7 +31,7 @@ func TestSplitRegularString(t *testing.T) {
 	}
 
 	tests := []test{
-		{input: "howareyoudoingtoday?", want: "how are you doing today ?"},
+		{input: "Howareyoudoingtoday?", want: "How are you doing today ?"},
 		{input: "persistenceiskey", want: "persistence is key"},
 		{input: "welcometomycity", want: "welcome to my city"},
 		{input: "hundred", want: "hundred"},

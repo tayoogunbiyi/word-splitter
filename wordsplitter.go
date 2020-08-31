@@ -105,7 +105,7 @@ func FindBestMatch(s string,costIdx int, cost [] float64) (float64,int){
 	optimalCost := math.Inf(1)
 	optimalCostIdx := -1
 	for k,c := range candidatesForBestMatch{
-		key := s[costIdx-k-1:costIdx]
+		key := strings.ToLower(s[costIdx-k-1:costIdx])
 		newCost := c + wordCost.Get(key,9.0e99)
 		if newCost < optimalCost{
 			optimalCost = newCost
