@@ -124,6 +124,10 @@ func FindBestMatch(s string,costIdx int, cost [] float64) (float64,int){
 	return optimalCost,optimalCostIdx
 }
 
+func isInteger(ch uint8) bool{
+	return ch >= 48 && ch <= 57
+}
+
 func Split(s string) string{
 	cost := []float64 {0.0}
 	for i := 1; i < len(s)+1; i++{
@@ -133,7 +137,19 @@ func Split(s string) string{
 	output := []string{}
 	for i := len(s); i > 0;{
 		_,k := FindBestMatch(s,i,cost)
-		output = append(output,s[i-k:i])
+		currSubstring := s[i-k:i]
+		nT := true
+		if currSubstring != "'"{
+			if len(output) > 0{
+				if output[len(output)-1] == "'s" || (isInteger(s[i-1]) && isInteger(output[len(output)-1][0])){
+					output[len(output)-1] = currSubstring + output[len(output)-1]
+					nT = false
+				}
+			}
+		}
+		if nT{
+			output = append(output, currSubstring)
+		}
 		i-=k
 	}
 	return strings.Join(ReverseStringSlice(output)," ")

@@ -24,7 +24,7 @@ func TestReverse(t *testing.T) {
 	}
 }
 
-func TestSplit(t *testing.T) {
+func TestSplitRegularString(t *testing.T) {
 	type test struct {
 		input string
 		want  string
@@ -34,6 +34,46 @@ func TestSplit(t *testing.T) {
 		{input: "howareyoudoingtoday?", want: "how are you doing today ?"},
 		{input: "persistenceiskey", want: "persistence is key"},
 		{input: "hundred", want: "hundred"},
+	}
+
+	for _,tc := range  tests{
+		result := Split(tc.input)
+		if result != tc.want{
+			t.Errorf("Expected %s but got %s",tc.want,result)
+		}
+	}
+}
+
+func TestIsInteger(t *testing.T){
+	s := "tayo12"
+	isInteger(s[4])
+}
+
+func TestSplitDigitString(t *testing.T) {
+	type test struct {
+		input string
+		want  string
+	}
+
+	tests := []test{
+		{input: "2020isthecurrentyear", want: "2020 is the current year"},
+	}
+	for _,tc := range  tests{
+		result := Split(tc.input)
+		if result != tc.want{
+			t.Errorf("Expected %s but got %s",tc.want,result)
+		}
+	}
+}
+
+func TestSplitApostropheString(t *testing.T) {
+	type test struct {
+		input string
+		want  string
+	}
+
+	tests := []test{
+		{input: "google'sprogramminglanguage", want: "google's programming language"},
 	}
 	for _,tc := range  tests{
 		result := Split(tc.input)
