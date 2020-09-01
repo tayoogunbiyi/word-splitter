@@ -19,8 +19,8 @@ go get github.com/tayoogunbiyi/word-splitter
 package main
 
 import (
-    "fmt"
-    "github.com/tayoogunbiyi/word-splitter"
+	"fmt"
+	 wordsplitter "github.com/tayoogunbiyi/word-splitter"
 )
 
 func main(){
