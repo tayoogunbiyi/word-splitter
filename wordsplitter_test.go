@@ -5,7 +5,7 @@ import (
 )
 
 func TestReadWordFile(t *testing.T) {
-	words, err := readWordFile(wordFilePath)
+	words, err := readWordFile("words.txt")
 	if err != nil {
 		t.Error(err)
 	}

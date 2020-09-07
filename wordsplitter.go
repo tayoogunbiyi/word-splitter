@@ -11,7 +11,6 @@ import (
 )
 
 var (
-	wordFilePath string
 	wordCost     *CostMap
 )
 
@@ -30,8 +29,7 @@ func (cm *CostMap) Get(key string, default_ float64) float64 {
 
 func init() {
 	_, fp, _, _ := runtime.Caller(0)
-	wordFilePath = "words.txt"
-	languageWords, err := readWordFile(path.Join(path.Dir(fp), wordFilePath))
+	languageWords, err := readWordFile(path.Join(path.Dir(fp), "words.txt"))
 
 	if err != nil {
 		fmt.Println("Could not load word frequency list - " + err.Error())
@@ -67,6 +65,7 @@ func readWordFile(filepath string) ([]string, error) {
 	}
 	defer f.Close()
 
+	words := []string{}
 	scanner := bufio.NewScanner(f)
 	for scanner.Scan() {
 		words = append(words, scanner.Text())
