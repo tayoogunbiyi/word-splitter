@@ -59,7 +59,7 @@ func NewCostMap(words []string, Cost func(int, []string) float64) *CostMap {
 	return cm
 }
 
-func readWordFile(filepath string) (words []string, err error) {
+func readWordFile(filepath string) ([]string, error) {
 	f, err := os.Open(filepath)
 
 	if err != nil {
