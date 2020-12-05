@@ -24,8 +24,8 @@ import (
 )
 
 func main(){
-    fmt.Println(wordsplitter.Split("welcometomycity")) // outputs "welcome to my city"
-    fmt.Println(wordsplitter.Split("2020istheyear")) // outputs "2020 is the year"
+    fmt.Println(wordsplitter.Split("welcometomycity")) // outputs ["welcome", "to" ,"my" ,"city"]
+    fmt.Println(wordsplitter.Split("2020istheyear")) // outputs ["2020" ,"is" ,"the" ,"year"]
 
 }
 
