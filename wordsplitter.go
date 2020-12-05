@@ -11,7 +11,7 @@ import (
 )
 
 var (
-	wordCost     *CostMap
+	wordCost *CostMap
 )
 
 type CostMap struct {
@@ -123,7 +123,7 @@ func isInteger(ch uint8) bool {
 	return ch >= 48 && ch <= 57
 }
 
-func Split(s string) string {
+func Split(s string) []string {
 	cost := []float64{0.0}
 	for i := 1; i < len(s)+1; i++ {
 		c, _ := FindBestMatch(s, i, cost)
@@ -147,6 +147,6 @@ func Split(s string) string {
 		}
 		i -= k
 	}
-	return strings.Join(ReverseStringSlice(output), " ")
+	return ReverseStringSlice(output)
 
 }

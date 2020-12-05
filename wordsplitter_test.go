@@ -1,6 +1,7 @@
 package wordsplitter
 
 import (
+	"reflect"
 	"testing"
 )
 
@@ -27,19 +28,19 @@ func TestReverseFloatSlice(t *testing.T) {
 func TestSplitRegularString(t *testing.T) {
 	type test struct {
 		input string
-		want  string
+		want  []string
 	}
 
 	tests := []test{
-		{input: "Howareyoudoingtoday?", want: "How are you doing today ?"},
-		{input: "persistenceiskey", want: "persistence is key"},
-		{input: "welcometomycity", want: "welcome to my city"},
-		{input: "hundred", want: "hundred"},
+		{input: "Howareyoudoingtoday?", want: []string{"How", "are", "you", "doing", "today", "?"}},
+		{input: "persistenceiskey", want: []string{"persistence", "is", "key"}},
+		{input: "welcometomycity", want: []string{"welcome", "to", "my", "city"}},
+		{input: "hundred", want: []string{"hundred"}},
 	}
 
 	for _, tc := range tests {
 		result := Split(tc.input)
-		if result != tc.want {
+		if !reflect.DeepEqual(result, tc.want) {
 			t.Errorf("Expected %s but got %s", tc.want, result)
 		}
 	}
@@ -53,15 +54,15 @@ func TestIsInteger(t *testing.T) {
 func TestSplitDigitString(t *testing.T) {
 	type test struct {
 		input string
-		want  string
+		want  []string
 	}
 
 	tests := []test{
-		{input: "2020isthecurrentyear", want: "2020 is the current year"},
+		{input: "2020isthecurrentyear", want: []string{"2020", "is", "the", "current", "year"}},
 	}
 	for _, tc := range tests {
 		result := Split(tc.input)
-		if result != tc.want {
+		if !reflect.DeepEqual(result, tc.want) {
 			t.Errorf("Expected %s but got %s", tc.want, result)
 		}
 	}
@@ -70,15 +71,15 @@ func TestSplitDigitString(t *testing.T) {
 func TestSplitApostropheString(t *testing.T) {
 	type test struct {
 		input string
-		want  string
+		want  []string
 	}
 
 	tests := []test{
-		{input: "google'sprogramminglanguage", want: "google's programming language"},
+		{input: "google'sprogramminglanguage", want: []string{"google's", "programming", "language"}},
 	}
 	for _, tc := range tests {
 		result := Split(tc.input)
-		if result != tc.want {
+		if !reflect.DeepEqual(result, tc.want) {
 			t.Errorf("Expected %s but got %s", tc.want, result)
 		}
 	}
